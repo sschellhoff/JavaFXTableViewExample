@@ -1,8 +1,11 @@
 package de.sschellhoff.tableExample.viewmodel;
 
 import de.sschellhoff.tableExample.model.Person;
+import de.sschellhoff.tableExample.model.PersonDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
+import java.util.List;
 
 
 public class PersonTableViewModel {
@@ -10,8 +13,9 @@ public class PersonTableViewModel {
 
     public PersonTableViewModel() {
         this.items = FXCollections.observableArrayList();
-        this.items.add(new PersonViewModel(new Person("Peter", "Trompeter", 1337)));
-        this.items.add(new PersonViewModel(new Person("Hans", "Meiser", 42)));
+        PersonDAO personDao = new PersonDAO();
+        List<Person> personModels = personDao.getPersons();
+        personModels.forEach(person -> items.add(new PersonViewModel(person)));
     }
 
     public ObservableList<PersonViewModel> getItems() {
